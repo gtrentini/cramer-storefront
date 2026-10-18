@@ -1,0 +1,88 @@
+@use './variables' as vars;
+@use './mixins' as mix;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  // Default to vault theme variables
+  @each $key, $value in vars.$theme-vault {
+    --#{$key}: #{$value};
+  }
+
+  // Z-index scale as CSS variables as well
+  --z-dropdown: #{vars.$z-dropdown};
+  --z-sticky: #{vars.$z-sticky};
+  --z-modal-backdrop: #{vars.$z-modal-backdrop};
+  --z-modal-content: #{vars.$z-modal-content};
+}
+
+// Vault Theme: Dark slate, gold/amber metallic accents, slab borders
+[data-theme='vault'] {
+  @each $key, $value in vars.$theme-vault {
+    --#{$key}: #{$value};
+  }
+}
+
+// Gallery Theme: Warm off-white/cream, forest/charcoal accents, archival borders
+[data-theme='gallery'] {
+  @each $key, $value in vars.$theme-gallery {
+    --#{$key}: #{$value};
+  }
+}
+
+// Terminal Theme: Technical matte black, electric cyan/lime accents, high-density borders
+[data-theme='terminal'] {
+  @each $key, $value in vars.$theme-terminal {
+    --#{$key}: #{$value};
+  }
+}
+
+html,
+body {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  @include mix.custom-scrollbar();
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

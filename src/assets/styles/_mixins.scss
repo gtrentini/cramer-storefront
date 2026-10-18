@@ -1,0 +1,56 @@
+@use 'sass:map';
+@use './variables' as vars;
+
+// Media query helper: min-width
+@mixin respond-to($breakpoint) {
+  @if map.has-key(vars.$breakpoints, $breakpoint) {
+    @media screen and (min-width: map.get(vars.$breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @error "Invalid breakpoint `#{$breakpoint}`. Available breakpoints: #{map.keys(vars.$breakpoints)}";
+  }
+}
+
+// Media query helper: max-width
+@mixin respond-below($breakpoint) {
+  @if map.has-key(vars.$breakpoints, $breakpoint) {
+    @media screen and (max-width: (map.get(vars.$breakpoints, $breakpoint) - 0.02px)) {
+      @content;
+    }
+  } @else {
+    @error "Invalid breakpoint `#{$breakpoint}`. Available breakpoints: #{map.keys(vars.$breakpoints)}";
+  }
+}
+
+// Flex center helper
+@mixin flex-center($direction: row, $justify: center, $align: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// Custom scrollbar mixin
+@mixin custom-scrollbar($width: 8px, $thumb: var(--border-color), $track: var(--bg-primary)) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb;
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--accent-primary);
+    }
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: $thumb $track;
+}
